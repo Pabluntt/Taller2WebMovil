@@ -1,0 +1,37 @@
+.gradient-blue {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #5bbafd 0%, #0e5a94 40%, #1e91e9 70%, #1282c9 100%);
+  color: #ffffff;
+  font-family: system-ui, Arial, sans-serif;
+}
+
+/* Contenedor tipo panel */
+.panel {
+  background: rgba(255, 255, 255, 0.158);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Imagen principal */
+.hero-img {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.726);
+  display: block;
+}
+
+.gearsLuffy li {
+  list-style: none;
+  background: rgba(255,255,255,0.10);
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.gearsLuffy li strong { display: block; margin-bottom: 4px; }
