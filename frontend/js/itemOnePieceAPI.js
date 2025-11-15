@@ -25,10 +25,10 @@ function renderList(items) {
   const ul = document.getElementById("list");
   if (!ul) return;
   ul.innerHTML = items.map(i => `
-    <li>
-      <strong>${i.name}</strong> (id: ${i.id})<br/>
-      Usos: ${i.count_technique}<br/>
-      <small>${i.description}</small>
+    <li class="bg-gray-800 bg-opacity-50 rounded-lg shadow-lg p-6 flex flex-col">
+      <h3 class="text-xl font-bold text-yellow-300 mb-2">${i.name}</h3>
+      <p class="text-gray-300 flex-grow">${i.description}</p>
+      <p class="text-indigo-300 font-semibold mt-4">Técnicas: ${i.count_technique}</p>
     </li>
   `).join("");
 }

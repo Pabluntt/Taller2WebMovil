@@ -7,12 +7,14 @@ from typing import Any, Dict, List, Optional
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from contextlib import asynccontextmanager
 
 load_dotenv()
 EXTERNAL_API_URL = "https://api.api-onepiece.com/v2/luffy-gears/en"
-DATABASE_URL = os.getenv("DATABASE_URL")
+
 
 def _conn():
+    DATABASE_URL = os.getenv("DATABASE_URL")
     if not DATABASE_URL:
         raise RuntimeError("La variable de entorno DATABASE_URL no está configurada.")
     sslmode = "require" if "railway.internal" in DATABASE_URL else "prefer"
@@ -51,7 +53,14 @@ def sync_data_to_db():
             """, (g.get("id"), g.get("name"), g.get("description"), g.get("count_technique", 0)))
     print(f"Sincronizados {len(data)} registros en la tabla 'onepiece_gears'.")
 
-app = FastAPI(title="One Piece Gears API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Iniciando aplicación y creando tabla si no existe...")
+    _init_db()
+    yield
+    print("Apagando aplicación.")
+
+app = FastAPI(title="One Piece Gears API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -59,11 +68,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Crea tabla si no existe
-@app.on_event("startup")
-def on_startup():
-    _init_db()
 
 # Endpoint principal
 @app.get("/api/onepiece/gears", summary="Obtiene todos los gears desde la BD")
@@ -78,3 +82,9 @@ def get_all_gears_from_db():
             )
         return rows
     
+if __name__ == "__main__":
+    print("Ejecutando script de sincronización para poblar la base de datos...")
+    try:
+        sync_data_to_db()
+    except Exception as e:
+        print(f"Error durante la sincronización: {e}")
