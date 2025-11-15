@@ -1,27 +1,14 @@
-// Usaremos Open-Meteo para obtener el clima de algunas ciudades
-const cities = [
-    { name: 'Santiago', lat: -33.45, lon: -70.66, region: 'Región Metropolitana', img: 'https://dynamic-media.tacdn.com/media/photo-o/2f/0b/0a/34/caption.jpg?w=700&h=500&s=1' },
-    { name: 'Ovalle', lat: -30.601, lon: -71.200, region: 'Coquimbo', img: 'https://media.viajando.travel/p/d5f6e02244e67f87124de7f9a67100dc/adjuntos/236/imagenes/000/680/0000680976/ovallejpeg.jpeg' },
-    { name: 'Vallenar', lat: -28.576, lon: -70.758, region: 'Atacama', img: 'https://www.geovirtual2.cl/Museovirtual/Vallenar-Atacama-14393n.jpg' },
-    { name: 'Coquimbo', lat: -29.953, lon: -71.343, region: 'Coquimbo', img: 'https://dondehospedarse.net/wp-content/uploads/2024/12/donde-alojarse-en-coquimbo-zonas-1024x576.jpeg' },
-    { name: 'La Serena', lat: -29.904, lon: -71.244, region: 'Coquimbo', img: 'https://conociendochile.com/wp-content/uploads/2018/01/La-Serena-1.png' },
-    { name: 'Antofagasta', lat: -23.650, lon: -70.400, region: 'Antofagasta', img: 'https://www.piensageotermia.com/wp-content/uploads/2014/09/2321488916_def55c592b_z.jpg' },
-    { name: 'Valparaíso', lat: -33.047, lon: -71.612, region: 'Valparaíso', img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Concepción', lat: -36.827, lon: -73.050, region: 'Biobío', img: 'https://ww2.propital.com/hubfs/file_20220616094819.jpg' },
-    { name: 'Temuco', lat: -38.735, lon: -72.590, region: 'Araucanía', img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Puerto Montt', lat: -41.469, lon: -72.942, region: 'Los Lagos', img: 'https://denomades.imgix.net/destinos/puerto-varas/487/city-tour-puerto-montt-puerto-varas-id487-838c.jpg?w=907&h=494&fit=crop&q=100&auto=format,compress&fm=webp' },
-    { name: 'Maipú', lat: -33.513, lon: -70.761, region: 'Región Metropolitana', img: 'https://assets-lvdm.storage.googleapis.com/wp-content/uploads/2024/03/maipu-8.jpg' },
-    { name: 'Puente Alto', lat: -33.614, lon: -70.575, region: 'Región Metropolitana', img: 'https://ifai.cl/wp-content/uploads/2019/06/Puente-Alto-1.jpg' },
-    { name: 'Ñuñoa', lat: -33.456, lon: -70.604, region: 'Región Metropolitana', img: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Providencia', lat: -33.426, lon: -70.617, region: 'Región Metropolitana', img: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
-    { name: 'Las Condes', lat: -33.408, lon: -70.567, region: 'Región Metropolitana', img: 'https://media-front.elmostrador.cl/2020/06/LasCondes-700x438.png' }
-];
+// URL del backend
+const API_URL = 'http://localhost:3000/climas';
+
+// Datos de respaldo (fallback) si el backend no está disponible
 
 
 async function cargarClima() {
     const grid = document.querySelector('.grid');
     let expandedCard = null;
-    let filteredCities = cities;
+    let filteredCities = [];
+    let citiesData = [];
 
     function renderCities(list) {
         grid.innerHTML = '';
@@ -48,22 +35,20 @@ async function cargarClima() {
             return;
         }
         for (const city of list) {
-            const res = city._weatherData;
-            const weather = res ? res.current_weather : null;
             const card = document.createElement('div');
             card.className = 'bg-white rounded shadow p-2 m-2 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col max-w-full';
             card.innerHTML = `
-                <img src="${city.img}" alt="${city.name}" class="rounded w-full h-40 object-cover mb-2 card-img transition-all duration-300" />
+                <img src="${city.img || 'https://via.placeholder.com/400'}" alt="${city.city || city.name}" class="rounded w-full h-40 object-cover mb-2 card-img transition-all duration-300" />
                 <div class="flex-1">
-                    <h2 class="font-bold text-lg mb-1 card-title">${city.name}</h2>
-                    <p class="text-gray-700 card-temp">Temperatura: ${weather ? weather.temperature + '°C' : 'Cargando...'}</p>
-                    <p class="text-gray-500 card-wind">Viento: ${weather ? weather.windspeed + ' km/h' : ''}</p>
-                    <p class="text-gray-400 card-desc">Clima: ${weather ? getWeatherDescription(weather.weathercode) : ''}</p>
+                    <h2 class="font-bold text-lg mb-1 card-title">${city.city || city.name}</h2>
+                    <p class="text-gray-700 card-temp">Temperatura: ${city.temperature != null ? city.temperature + '°C' : 'N/A'}</p>
+                    <p class="text-gray-500 card-wind">Viento: ${city.windspeed != null ? city.windspeed + ' km/h' : 'N/A'}</p>
+                    <p class="text-gray-400 card-desc">Clima: ${city.weathercode != null ? getWeatherDescription(city.weathercode) : 'N/A'}</p>
                     <div class="extra-details hidden mt-2">
                         <p class="text-gray-600">Latitud: ${city.lat}</p>
                         <p class="text-gray-600">Longitud: ${city.lon}</p>
-                        <p class="text-gray-600">Región: ${city.region}</p>
-                        <p class="text-gray-600">Código clima: ${weather ? weather.weathercode : ''}</p>
+                        <p class="text-gray-600">Región: ${city.region || 'N/A'}</p>
+                        <p class="text-gray-600">Código clima: ${city.weathercode != null ? city.weathercode : 'N/A'}</p>
                     </div>
                 </div>
             `;
@@ -112,15 +97,47 @@ async function cargarClima() {
             grid.appendChild(card);
         }
     }
-    // Fetch weather data for all cities and render
-    Promise.all(cities.map(async city => {
-        const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`);
-        city._weatherData = await res.json();
-    })).then(() => renderCities(filteredCities));
+
+    // Intentar obtener datos desde el backend
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error('Backend no disponible');
+        }
+        citiesData = await response.json();
+        console.log('Datos obtenidos del backend:', citiesData);
+    } catch (error) {
+        console.warn('No se pudo conectar al backend, usando datos de respaldo:', error);
+        // Si falla el backend, usar Open-Meteo directamente como respaldo
+        citiesData = await Promise.all(cities.map(async city => {
+            try {
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`);
+                const weatherData = await res.json();
+                return {
+                    ...city,
+                    city: city.name,
+                    temperature: weatherData.current_weather?.temperature,
+                    windspeed: weatherData.current_weather?.windspeed,
+                    weathercode: weatherData.current_weather?.weathercode
+                };
+            } catch (err) {
+                console.error(`Error obteniendo clima para ${city.name}:`, err);
+                return { ...city, city: city.name };
+            }
+        }));
+    }
+
+    filteredCities = citiesData;
+    renderCities(filteredCities);
+
     // Filtro por comuna/region
     window.filtrarClima = function(valor) {
         valor = valor.toLowerCase();
-        filteredCities = cities.filter(c => c.name.toLowerCase().includes(valor) || c.region.toLowerCase().includes(valor));
+        filteredCities = citiesData.filter(c => {
+            const cityName = (c.city || c.name || '').toLowerCase();
+            const region = (c.region || '').toLowerCase();
+            return cityName.includes(valor) || region.includes(valor);
+        });
         renderCities(filteredCities);
     }
 }

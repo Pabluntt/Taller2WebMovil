@@ -1,4 +1,4 @@
-import { Controller, Get, Sse } from '@nestjs/common';
+import { Controller, Get, Param, Sse } from '@nestjs/common';
 import { Observable, from, map, interval, mergeMap } from 'rxjs';
 import { SupabaseService } from './supabase.service';
 
@@ -9,6 +9,11 @@ export class SupabaseController {
   @Get()
   async findAll() {
     return this.supabaseService.getAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.supabaseService.getById(parseInt(id));
   }
 
   // SSE: emisión única (se conecta, envía los datos actuales y cierra)
