@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/api3.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../js/api3.js"></script>
+  <title>API de Clima</title>
+  <link rel="icon" href="https://images.icon-icons.com/1903/PNG/512/iconfinder-weather-weather-forecast-sunny-rain-climate-3859146_121228.png" type="image/x-icon">
+</head>
+<body>
+
+
+   <div class="fixed top-0 left-0 w-full bg-blue-500 text-white p-4 shadow z-50 flex items-center justify-between">
+    <span>Información del Clima</span>
+
+    <button class="shadow-lg rounded flex items-center justify-center p-4">
+      <a href="home.html">
+        <img class="w-5 h-5 object-contain" src="https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/home-page-white-icon.png" alt="Inicio">
+      </a>
+    </button>
+  </div>
+
+
+  <div class="w-full bg-white py-2 px-4 shadow flex flex-col sm:flex-row items-center gap-2 mt-15 z-40 sticky top-20">
+    <input type="text" placeholder="Filtrar por comuna o región..." class="w-full sm:w-1/2 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" oninput="filtrarClima(this.value)">
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 mt-10 py-10 px-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <!-- Las tarjetas de clima se insertan aquí -->
+  </div>
+
+</body>
+</html>
