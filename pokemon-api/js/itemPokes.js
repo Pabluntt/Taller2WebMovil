@@ -48,8 +48,9 @@ async function cargarPokesPorTipoConSelector(tipo, tiposDisponibles = [], conten
     if (!contenedor) contenedor = document.querySelector('#pokeSections');
     try {
         // Llamar a la API Express propia para obtener los pokemons por tipo.
-        // Cambia `API_BASE` si apuntas a producción (ej. URL de Railway).
-        const API_BASE = 'http://localhost:3002';
+        // `API_BASE` puede inyectarse desde la página con `window.API_BASE`.
+        // Por defecto utiliza http://localhost:3002
+        const API_BASE = (window && window.API_BASE) ? window.API_BASE : 'http://localhost:3002';
         const url = `${API_BASE}/pokemons?type=${encodeURIComponent(tipo)}&limit=6`;
         console.log('Cargando pokemons desde', url);
         const res = await fetch(url);
