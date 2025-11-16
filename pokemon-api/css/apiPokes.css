@@ -1,0 +1,4 @@
+/* Estilos mínimos para la demo de la API de Pokemons */
+body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.poke-card { transition: transform .2s ease; }
+.poke-card:hover { transform: scale(1.02); }
