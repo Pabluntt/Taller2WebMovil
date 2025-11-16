@@ -3,6 +3,12 @@
 /node_modules
 /build
 
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
 # Logs
 logs
 *.log
@@ -14,6 +20,7 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+Thumbs.db
 
 # Tests
 /coverage
@@ -34,6 +41,7 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.idea/
 
 # dotenv environment variable files
 .env
