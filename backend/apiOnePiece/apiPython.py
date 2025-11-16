@@ -58,6 +58,10 @@ def sync_data_to_db():
 async def lifespan(app: FastAPI):
     print("Iniciando aplicación y creando tabla si no existe...")
     _init_db()
+    try:
+        sync_data_to_db()  # Pobla la tabla al iniciar si hay datos externos
+    except Exception as e:
+        print(f"Advertencia: no se pudo sincronizar al iniciar -> {e}")
     yield
     print("Apagando aplicación.")
 
