@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
+from fastapi.staticfiles import StaticFiles
 
 load_dotenv()
 EXTERNAL_API_URL = "https://api.api-onepiece.com/v2/luffy-gears/en"
@@ -68,6 +69,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/front", StaticFiles(directory="frontend/html"), name="front")
 
 # Endpoint principal
 @app.get("/api/onepiece/gears", summary="Obtiene todos los gears desde la BD")
