@@ -1,0 +1,13 @@
+----
+Para poder utilizar la aplicación es necesario que esta misma se use en el entorno local
+(en el mismo PC), como emulación.
+Para poder obtener los datos es necesario levantar el backend, para esto mismo se usaran los siguientes comandos
+Primero instalar dependencias:
+
+api-clima: npm install
+api-One-Piece: pip install -r requirements.txt
+api-Pokemon:
+
+api-clima: npm run start:dev
+api-One-Piece: uvicorn backend.apiOnePiece.apiPython:app --reload
+api-Pokemon: 
