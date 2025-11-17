@@ -10,6 +10,8 @@ Pablo Lopez - 21518678-4 - pablo.lopez01@alumnos.ucn.cl - C2
 
 Tecnologias:
 
+api-clima: nestjs
+
 Bases de datos utilizadas:
 
 api-clima: Supabase (para la utilizacion de una base de datos en la nube con postgre) 
