@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com; img-src 'self' data: https: http:; connect-src 'self' https: http:;">
+    <title>Taller 2 Web Móvil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .app-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    
+    <!-- Header -->
+    <header class="gradient-bg text-white p-6 shadow-lg">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold mb-2">📱 Taller 2 Web Móvil</h1>
+            <p class="text-lg opacity-90">Aplicaciones Integradas</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            
+            <!-- Clima App Card -->
+            <div class="app-card bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-400 to-blue-600 p-6 text-white text-center">
+                    <div class="text-6xl mb-3">🌤️</div>
+                    <h2 class="text-2xl font-bold">Clima</h2>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 text-center">
+                        Consulta el clima de diferentes ciudades de Chile con datos en tiempo real desde Supabase.
+                    </p>
+                    <a href="clima/api3.html" class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg text-center transition">
+                        Abrir App
+                    </a>
+                </div>
+            </div>
+
+            <!-- One Piece App Card -->
+            <div class="app-card bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-orange-400 to-red-600 p-6 text-white text-center">
+                    <div class="text-6xl mb-3">⚓</div>
+                    <h2 class="text-2xl font-bold">One Piece</h2>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 text-center">
+                        Descubre los diferentes Gears de Luffy y sus características únicas.
+                    </p>
+                    <a href="onepiece/frontOnePiece.html" class="block w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg text-center transition">
+                        Abrir App
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pokemon App Card -->
+            <div class="app-card bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-red-400 to-yellow-500 p-6 text-white text-center">
+                    <div class="text-6xl mb-3">⚡</div>
+                    <h2 class="text-2xl font-bold">Pokémon</h2>
+                </div>
+                <div class="p-6">
+                    <p class="text-gray-600 mb-4 text-center">
+                        Randomizador Monotype de Pokémon. Genera equipos aleatorios por tipo.
+                    </p>
+                    <a href="pokemon/apiPokes.html" class="block w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg text-center transition">
+                        Abrir App
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Info Section -->
+        <div class="mt-12 max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">ℹ️ Acerca de esta App</h3>
+            <p class="text-gray-600 text-center leading-relaxed">
+                Esta aplicación móvil integra tres proyectos web diferentes en una sola app usando Apache Cordova.
+                Cada sección consume APIs diferentes y ofrece una experiencia única.
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-6 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm">© 2025 Taller 2 Web Móvil - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script src="cordova.js"></script>
+    <script>
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova está listo!');
+        }, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Taller 2 Web Móvil",
+  "short_name": "Taller 2 Web Móvil",
+  "version": "com.taller2.webmovil",
+  "description": "Aplicación móvil que integra APIs de Clima, One Piece y Pokémon",
+  "author": "Equipo Taller 2",
+  "icons": [],
+  "start_url": "index.html"
+}

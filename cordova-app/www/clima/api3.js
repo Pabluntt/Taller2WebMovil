@@ -1,7 +1,5 @@
-// URL del backend
-const API_URL = 'http://localhost:3000/climas';
-
-// Datos de respaldo (fallback) si el backend no está disponible
+// URL del backend NestJS - api-clima
+const API_URL = 'http://10.0.2.2:3000/climas';
 
 async function cargarClima() {
     const grid = document.querySelector('.grid');
@@ -11,7 +9,6 @@ async function cargarClima() {
 
     function renderCities(list) {
         grid.innerHTML = '';
-        // Si no hay ciudades, cerrar tarjeta expandida y mostrar mensaje
         if (list.length === 0) {
             if (expandedCard) {
                 expandedCard.classList.remove(
@@ -26,7 +23,6 @@ async function cargarClima() {
                 expandedCard.querySelector('.extra-details').classList.add('hidden');
                 expandedCard = null;
             }
-            // Mostrar mensaje de no resultados con margen superior
             const msg = document.createElement('div');
             msg.className = 'text-center text-gray-500 w-full py-8 mt-32'; 
             msg.textContent = 'No se encontraron resultados.';
@@ -37,9 +33,9 @@ async function cargarClima() {
             const card = document.createElement('div');
             card.className = 'bg-white rounded shadow p-2 m-2 transition-all duration-300 cursor-pointer overflow-hidden flex flex-col max-w-full';
             card.innerHTML = `
-                <img src="${city.img || 'https://via.placeholder.com/400'}" alt="${city.city || city.name}" class="rounded w-full h-40 object-cover mb-2 card-img transition-all duration-300" />
+                <img src="${city.img || 'https://via.placeholder.com/400'}" alt="${city.city}" class="rounded w-full h-40 object-cover mb-2 card-img transition-all duration-300" />
                 <div class="flex-1">
-                    <h2 class="font-bold text-lg mb-1 card-title">${city.city || city.name}</h2>
+                    <h2 class="font-bold text-lg mb-1 card-title">${city.city}</h2>
                     <p class="text-gray-700 card-temp">Temperatura: ${city.temperature != null ? city.temperature + '°C' : 'N/A'}</p>
                     <p class="text-gray-500 card-wind">Viento: ${city.windspeed != null ? city.windspeed + ' km/h' : 'N/A'}</p>
                     <p class="text-gray-400 card-desc">Clima: ${city.weathercode != null ? getWeatherDescription(city.weathercode) : 'N/A'}</p>
@@ -97,43 +93,56 @@ async function cargarClima() {
         }
     }
 
-    // Intentar obtener datos desde el backend
+    // Mostrar info de debug en pantalla
+    const debugInfo = document.createElement('div');
+    debugInfo.className = 'text-center text-blue-600 w-full py-4 mt-20 text-sm';
+    debugInfo.innerHTML = `🔍 Intentando conectar...<br>URL: ${API_URL}<br>Esperando respuesta...`;
+    grid.appendChild(debugInfo);
+
+    // Obtener datos desde el backend NestJS
     try {
+        console.log('Intentando conectar a:', API_URL);
+        debugInfo.innerHTML = `🔄 Conectando a: ${API_URL}...<br>Enviando petición...`;
+        
         const response = await fetch(API_URL);
+        console.log('Respuesta recibida:', response.status, response.statusText);
+        
+        debugInfo.innerHTML = `✅ Respuesta recibida!<br>Status: ${response.status} ${response.statusText}<br>Procesando datos...`;
+        
         if (!response.ok) {
-            throw new Error('Backend no disponible');
+            throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
         }
         citiesData = await response.json();
-        console.log('Datos obtenidos del backend:', citiesData);
+        console.log('Datos obtenidos de Supabase:', citiesData);
+        
+        debugInfo.remove(); // Quitar el mensaje de debug si todo funciona
     } catch (error) {
-        console.warn('No se pudo conectar al backend, usando datos de respaldo:', error);
-        // Si falla el backend, usar Open-Meteo directamente como respaldo
-        citiesData = await Promise.all(cities.map(async city => {
-            try {
-                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current_weather=true`);
-                const weatherData = await res.json();
-                return {
-                    ...city,
-                    city: city.name,
-                    temperature: weatherData.current_weather?.temperature,
-                    windspeed: weatherData.current_weather?.windspeed,
-                    weathercode: weatherData.current_weather?.weathercode
-                };
-            } catch (err) {
-                console.error(`Error obteniendo clima para ${city.name}:`, err);
-                return { ...city, city: city.name };
-            }
-        }));
+        console.error('Error detallado al obtener datos:', error);
+        console.error('Tipo de error:', error.name);
+        console.error('Mensaje de error:', error.message);
+        console.error('Stack:', error.stack);
+        
+        grid.innerHTML = `
+            <div class="text-center text-red-500 w-full py-8 mt-32 px-4">
+                <h3 class="text-xl font-bold mb-4">❌ Error al cargar datos</h3>
+                <div class="bg-red-100 p-4 rounded text-left text-sm">
+                    <p><strong>URL:</strong> ${API_URL}</p>
+                    <p><strong>Tipo:</strong> ${error.name}</p>
+                    <p><strong>Mensaje:</strong> ${error.message}</p>
+                    <p class="mt-2 text-xs text-gray-700">Verifica que el backend esté corriendo en el puerto 3000</p>
+                </div>
+            </div>
+        `;
+        return;
     }
 
     filteredCities = citiesData;
     renderCities(filteredCities);
 
-    // Filtro por comuna/region
     window.filtrarClima = function(valor) {
         valor = valor.toLowerCase();
         filteredCities = citiesData.filter(c => {
-            const cityName = (c.city || c.name || '').toLowerCase();
+            const cityName = (c.city || '').toLowerCase();
             const region = (c.region || '').toLowerCase();
             return cityName.includes(valor) || region.includes(valor);
         });
@@ -141,7 +150,6 @@ async function cargarClima() {
     }
 }
 
-// Traducción de weathercode a texto legible
 function getWeatherDescription(code) {
     const codes = {
         0: 'Despejado',

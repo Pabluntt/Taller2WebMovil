@@ -1,0 +1,33 @@
+{
+  "name": "taller2-webmovil-app",
+  "version": "1.0.0",
+  "displayName": "Taller 2 Web Móvil",
+  "description": "Aplicación móvil que integra APIs de Clima, One Piece y Pokémon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "cordova",
+    "mobile",
+    "clima",
+    "onepiece",
+    "pokemon"
+  ],
+  "author": "Equipo Taller 2",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova-android": "^14.0.1",
+    "cordova-browser": "^6.0.0",
+    "cordova-plugin-whitelist": "^1.3.5"
+  },
+  "cordova": {
+    "platforms": [
+      "browser",
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    }
+  }
+}

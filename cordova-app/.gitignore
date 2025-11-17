@@ -1,0 +1,26 @@
+# Node modules (regenerable con npm install)
+node_modules/
+
+# Build outputs (regenerables)
+platforms/android/app/build/
+platforms/android/.gradle/
+platforms/android/app/.cxx/
+*.apk
+*.aab
+*.ipa
+
+# Android Studio / IntelliJ (regenerables)
+.idea/
+*.iml
+local.properties
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de Cordova
+platforms/android/app/src/main/assets/www/

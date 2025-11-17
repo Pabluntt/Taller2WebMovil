@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: gap: content:; connect-src *;">
+    <link rel="stylesheet" href="apiOnePiece.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>One Piece</title>
+    <link rel="icon" href="https://cdn3.iconfinder.com/data/icons/one-piece-flat/48/Cartoons__Anime_One_Piece_Artboard_37-512.png" type="image/x-icon">
+</head>
+
+<body class="gradient-blue">
+  <div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+    
+    <header class="panel text-center text-2xl font-bold">
+      Gears de Luffy
+      <br/>
+      <p class="text-center text-sm">La API entrega los datos en inglés.</p>
+      <button class="mt-4 shadow-lg rounded bg-white text-blue-600 px-4 py-2">
+        <a href="../index.html">🏠 Volver al Inicio</a>
+      </button>
+    </header>
+
+    <div>
+      <img class="hero-img" src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2024/08/split-image-of-luffy-gears.jpg" alt="Luffy Gears">
+    </div>
+
+    <div class="panel">
+      <p class="text-center font-medium">
+        El característico protagonista de One Piece, Monkey D. Luffy, ha pasado por batallas que lo han llevado al límite, y por esto <br>
+            mismo ha necesitado desarrollar ciertas técnicas para poder hacerle frente y derrotar a sus enemigos. Estas técnicas son llamadas "Gears", <br>
+            "Marchas", las cuales indican las distintas fases por las que pasa, cada vez más poderosas a medida que es una marcha más alta.
+      </p>
+    </div>
+
+    <main class="panel">
+      <div class="mb-3">
+        <button id="btnToggleOrder" class="bg-indigo-500 hover:bg-blue-600 px-4 py-2 rounded text-sm">Orden: Descendente</button>
+      </div>
+      <ul class="gearsLuffy grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="list"></ul>
+    </main>
+
+  </div>
+  <script src="../cordova.js"></script>
+  <script type="module" src="itemOnePieceAPI.js"></script>
+</body>
+
+</html>
