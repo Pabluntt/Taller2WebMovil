@@ -74,7 +74,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/front", StaticFiles(directory="frontend/html"), name="front")
+# app.mount("/front", StaticFiles(directory="frontend/html"), name="front")
 
 # Endpoint principal
 @app.get("/api/onepiece/gears", summary="Obtiene todos los gears desde la BD")
