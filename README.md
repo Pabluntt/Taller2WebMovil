@@ -1,13 +1,19 @@
-# Taller2WebMovil
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Ignacio García 21.664.915-K
-Pablo López 21.518.678-4
-=======
+Grupo n16
 
-Pablo López Saavedra - 21.518.678-4
->>>>>>> Stashed changes
-=======
+Branco Abalos - 21619393-8 - branco.abalos@alumnos.ucn.cl - C2
 
-Pablo López Saavedra - 21.518.678-4
->>>>>>> Stashed changes
+Cristobal Avalos - 21624731-0 - Cristobal.avalos01@alumnos.ucn.cl - C1
+
+Ignacio García - 21664915-K - ignacio.garcia02@alumnos.ucn.cl - C2
+
+Pablo Lopez - 21518678-4 - pablo.lopez01@alumnos.ucn.cl - C2
+
+Tecnologias:
+
+api-clima: nestjs
+api-one-piece: fast api
+
+Bases de datos utilizadas:
+
+api-clima: Supabase (para la utilizacion de una base de datos en la nube con postgre) 
+api-one-piece: railway
